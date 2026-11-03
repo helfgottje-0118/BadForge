@@ -43,7 +43,8 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron .",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "test": "node --test"
   },
   "dependencies": {
     "electron": "^45.2.1",

@@ -7,6 +7,13 @@ if (invokedAs === 'forgewhip' || invokedAs === 'forgewhip.cmd') {
   console.warn('[ALIAS] "forgewhip" launches BadForge.');
 }
 
+if (process.platform === 'linux' && !process.env.DISPLAY && !process.env.WAYLAND_DISPLAY) {
+  console.error('BadForge requires a logged-in graphical desktop session.');
+  console.error('No DISPLAY or WAYLAND_DISPLAY is available in this terminal.');
+  console.error('Log in to the machine desktop, open a terminal there, and run: badforge');
+  process.exit(1);
+}
+
 let electronBinary;
 try {
   electronBinary = require('electron');
