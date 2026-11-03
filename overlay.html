@@ -2,12 +2,18 @@
 <html>
 <head>
 <style>
-  * { margin: 0; padding: 0; cursor: none; }
-  html, body { overflow: hidden; background: transparent; width: 100%; height: 100%; }
+  * { margin: 0; padding: 0; }
+  html, body { overflow: hidden; background: #090909; width: 100%; height: 100%; }
   canvas { display: block; }
+  #start { position: fixed; inset: 0; display: none; place-items: center; z-index: 2;
+    color: white; background: radial-gradient(circle, #272727, #090909 65%);
+    font: 600 24px system-ui, sans-serif; text-align: center; cursor: pointer; }
+  #start small { display: block; margin-top: 12px; color: #aaa; font-size: 15px; font-weight: 400; }
+  .active, .active * { cursor: none !important; }
 </style>
 </head>
 <body>
+<div id="start">Click to pick up the whip<small>Move your mouse sharply to crack the whip and play the sound</small></div>
 <canvas id="c"></canvas>
 <script src="lib/whip-motion.js"></script>
 <script>
@@ -71,6 +77,16 @@ const P = {
 
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
+const IS_WEB = !window.bridge;
+const startScreen = document.getElementById('start');
+if (IS_WEB) {
+  window.bridge = {
+    whipCrack() {},
+    hideOverlay() { document.body.classList.remove('active'); startScreen.style.display = 'grid'; },
+    onSpawnWhip() {}, onDropWhip() {}, onForceCrack() {},
+  };
+  startScreen.style.display = 'grid';
+}
 let W, H;
 
 function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
@@ -90,6 +106,15 @@ const WHIP_CRACK_SOUNDS = ['sounds/A.mp3', 'sounds/B.mp3', 'sounds/C.mp3', 'soun
 
 document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
 document.addEventListener('mousedown', () => {
+  if (IS_WEB && !whip) {
+    document.body.classList.add('active');
+    startScreen.style.display = 'none';
+    const unlock = new Audio(WHIP_CRACK_SOUNDS[0]);
+    unlock.volume = 0;
+    unlock.play().then(() => { unlock.pause(); }).catch(() => {});
+    whip = spawnWhip(mouseX || W / 2, mouseY || H / 2);
+    return;
+  }
   if (whip && !dropping) dropping = true;
 });
 
