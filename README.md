@@ -1,14 +1,14 @@
-# OpenWhip
+# ForgeWhip
 
 ![Whip divider](assets/divider.png)
 
-Sometimes claude code is going too shlow, and you must whip him into shape..
+Sometimes Forge is going too slow, and you must whip it into shape.
 
 ## Install + run
 
 ```bash
-npm install -g openwhip
-openwhip
+npm install -g github:helfgottje-0118/ForgeWhip
+forgewhip
 ```
 
 windows and mac supported out of the box, but Linux is a special snowflake so you need to install `xdotool` for keyboard automation
@@ -27,16 +27,12 @@ sudo apt install xdotool
 ## Roadmap
 
 - [x] Initial release! 🥳
-- [x] Cease and desist letter from Anthropic
+- [x] Forge adaptation of OpenWhip
 - [ ] Crypto miner
-- [ ] Logs of how many times you whipped claude so when the robots come we can order people nicely for them
+- [ ] Logs of how many times you whipped Forge so when the robots come we can order people nicely for them
 - [ ] Updated whip physics
 
-## Ecosystem
+## Credits
 
-The OFFICAL openwhip ecosystem token. 
-
-Contract address: BRyUZbJkm9Pty4FUmTrBGno7U4Ga8TWzcKJJRLCBpump
-
-Stay tuned for updates on X! 👀
-https://x.com/blended_jpeg
+ForgeWhip is adapted from [OpenWhip](https://github.com/GitFrog1111/OpenWhip).
+The original project is credited to GitFrog1111 and declares the MIT license in its package metadata.

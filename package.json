@@ -1,12 +1,12 @@
 {
-  "name": "openwhip",
+  "name": "forgewhip",
   "version": "1.1.0",
-  "description": "Whip Claude into shape",
+  "description": "Whip Forge into shape",
   "license": "MIT",
   "main": "main.js",
   "bin": {
-    "openwhip": "bin/openwhip.js",
-    "badclaude": "bin/openwhip.js"
+    "forgewhip": "bin/forgewhip.js",
+    "badforge": "bin/forgewhip.js"
   },
   "os": [
     "darwin",
@@ -24,20 +24,20 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GitFrog1111/OpenWhip.git"
+    "url": "git+https://github.com/helfgottje-0118/ForgeWhip.git"
   },
   "bugs": {
-    "url": "https://github.com/GitFrog1111/OpenWhip/issues"
+    "url": "https://github.com/helfgottje-0118/ForgeWhip/issues"
   },
-  "homepage": "https://github.com/GitFrog1111/OpenWhip#readme",
+  "homepage": "https://github.com/helfgottje-0118/ForgeWhip#readme",
   "files": [
     "main.js",
     "preload.js",
     "overlay.html",
     "sounds",
     "icon",
-    "bin/openwhip.js",
-    "bin/badclaude.js",
+    "bin/forgewhip.js",
+    "bin/badforge.js",
     "README.md"
   ],
   "scripts": {
@@ -46,7 +46,7 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "electron": "^33.0.0",
+    "electron": "^45.2.1",
     "koffi": "^2.9.0"
   }
 }
