@@ -9,6 +9,7 @@
 </head>
 <body>
 <canvas id="c"></canvas>
+<script src="lib/whip-motion.js"></script>
 <script>
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -172,6 +173,9 @@ function forceCrack() {
     whip = spawnWhip(mouseX || W / 2, mouseY || H / 2);
     dropping = false;
   }
+  const direction = Math.random() < 0.5 ? -1 : 1;
+  window.BadForgeMotion.applyCrackImpulse(whip, P.crackSpeed, direction);
+  lastCrackTime = Date.now();
   playCrackSound();
   window.bridge.whipCrack();
 }

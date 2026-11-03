@@ -1,6 +1,6 @@
 {
   "name": "badforge",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Whip Forge into shape",
   "license": "MIT",
   "main": "main.js",
