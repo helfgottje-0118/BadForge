@@ -167,6 +167,15 @@ function playCrackSound() {
   a.play().catch(() => {});
 }
 
+function forceCrack() {
+  if (!whip || dropping) {
+    whip = spawnWhip(mouseX || W / 2, mouseY || H / 2);
+    dropping = false;
+  }
+  playCrackSound();
+  window.bridge.whipCrack();
+}
+
 function updateHandleAim() {
   if (dropping) return;
   const mvx = mouseX - prevMouseX;
@@ -448,6 +457,8 @@ window.bridge.onSpawnWhip(() => {
 window.bridge.onDropWhip(() => {
   if (whip && !dropping) dropping = true;
 });
+
+window.bridge.onForceCrack(forceCrack);
 
 </script>
 </body>

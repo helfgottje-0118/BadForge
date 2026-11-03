@@ -24,7 +24,7 @@ try {
 
 const appPath = path.resolve(__dirname, '..');
 
-const child = spawn(electronBinary, [appPath], {
+const child = spawn(electronBinary, [appPath, ...process.argv.slice(2)], {
   detached: true,
   stdio: 'ignore',
   windowsHide: true,

@@ -1,8 +1,10 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, nativeImage, screen } = require('electron');
+const { app, BrowserWindow, Tray, Menu, ipcMain, nativeImage, screen, globalShortcut } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const { execFile } = require('child_process');
+const { isWhipSpawnRequested } = require('./lib/launch-options');
+const { createWhipShortcut } = require('./lib/whip-shortcut');
 
 // ── Win32 FFI (Windows only) ────────────────────────────────────────────────
 let keybd_event, VkKeyScanA;
@@ -21,6 +23,15 @@ if (process.platform === 'win32') {
 let tray, overlay;
 let overlayReady = false;
 let spawnQueued = false;
+const spawnRequested = isWhipSpawnRequested(process.argv);
+const whipShortcut = createWhipShortcut(globalShortcut, () => {
+  if (overlay && overlay.isVisible() && overlayReady) {
+    overlay.webContents.send('force-crack');
+  }
+});
+
+const hasInstanceLock = app.requestSingleInstanceLock({ action: spawnRequested ? 'spawn' : '' });
+if (!hasInstanceLock) app.quit();
 
 const VK_CONTROL = 0x11;
 const VK_RETURN  = 0x0D;
@@ -157,11 +168,17 @@ function createOverlay() {
 
 function toggleOverlay() {
   if (overlay && overlay.isVisible()) {
+    whipShortcut.deactivate();
     overlay.webContents.send('drop-whip');
     return;
   }
+  showOverlay();
+}
+
+function showOverlay() {
   if (!overlay) createOverlay();
   overlay.show();
+  whipShortcut.activate();
   if (overlayReady) {
     overlay.webContents.send('spawn-whip');
     refocusPreviousApp();
@@ -178,7 +195,10 @@ ipcMain.on('whip-crack', () => {
     console.warn('sendMacro failed:', err?.message || err);
   }
 });
-ipcMain.on('hide-overlay', () => { if (overlay) overlay.hide(); });
+ipcMain.on('hide-overlay', () => {
+  whipShortcut.deactivate();
+  if (overlay) overlay.hide();
+});
 
 // ── Macro: immediate Ctrl+C, type "Go FASER", Enter ───────────────────────
 function sendMacro() {
@@ -276,15 +296,24 @@ function sendMacroLinux(text) {
 }
 
 // ── App lifecycle ───────────────────────────────────────────────────────────
-app.whenReady().then(async () => {
-  tray = new Tray(await getTrayIcon());
-  tray.setToolTip('BadForge - click for whip');
-  tray.setContextMenu(
-    Menu.buildFromTemplate([
-      { label: 'Quit', click: () => app.quit() },
-    ])
-  );
-  tray.on('click', toggleOverlay);
-});
+if (hasInstanceLock) {
+  app.on('second-instance', (_event, _argv, _cwd, additionalData) => {
+    if (additionalData?.action === 'spawn') showOverlay();
+  });
+
+  app.whenReady().then(async () => {
+    tray = new Tray(await getTrayIcon());
+    tray.setToolTip('BadForge - click for whip');
+    tray.setContextMenu(
+      Menu.buildFromTemplate([
+        { label: 'Quit', click: () => app.quit() },
+      ])
+    );
+    tray.on('click', toggleOverlay);
+    if (spawnRequested) showOverlay();
+  });
+}
+
+app.on('will-quit', () => whipShortcut.deactivate());
 
 app.on('window-all-closed', e => e.preventDefault()); // keep alive in tray

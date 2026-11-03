@@ -20,9 +20,13 @@ sudo apt install xdotool
 ## Controls
 
 - Click tray icon: spawn whip.
+- Run `badforge --spawn`: spawn the whip immediately.
+- Press `W` while the whip is visible: crack it.
 - Click: drop whip.
 - Whip him 😩💢
 - It sends an interrupt (Ctrl-C) and one of 5 encouraging messages!
+
+In FORGE, use `/whipped` to spawn the whip, then press `W` to crack it.
 
 ## Roadmap
 

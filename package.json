@@ -1,6 +1,6 @@
 {
   "name": "badforge",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Whip Forge into shape",
   "license": "MIT",
   "main": "main.js",
@@ -36,6 +36,7 @@
     "overlay.html",
     "sounds",
     "icon",
+    "lib",
     "bin/badforge.js",
     "bin/forgewhip.js",
     "README.md"
