@@ -1,12 +1,12 @@
 {
-  "name": "forgewhip",
+  "name": "badforge",
   "version": "1.1.0",
   "description": "Whip Forge into shape",
   "license": "MIT",
   "main": "main.js",
   "bin": {
-    "forgewhip": "bin/forgewhip.js",
-    "badforge": "bin/forgewhip.js"
+    "badforge": "bin/badforge.js",
+    "forgewhip": "bin/badforge.js"
   },
   "os": [
     "darwin",
@@ -24,20 +24,20 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/helfgottje-0118/ForgeWhip.git"
+    "url": "git+https://github.com/helfgottje-0118/BadForge.git"
   },
   "bugs": {
-    "url": "https://github.com/helfgottje-0118/ForgeWhip/issues"
+    "url": "https://github.com/helfgottje-0118/BadForge/issues"
   },
-  "homepage": "https://github.com/helfgottje-0118/ForgeWhip#readme",
+  "homepage": "https://github.com/helfgottje-0118/BadForge#readme",
   "files": [
     "main.js",
     "preload.js",
     "overlay.html",
     "sounds",
     "icon",
-    "bin/forgewhip.js",
     "bin/badforge.js",
+    "bin/forgewhip.js",
     "README.md"
   ],
   "scripts": {

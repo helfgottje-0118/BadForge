@@ -72,7 +72,7 @@ function createTrayIconFallback() {
       return img;
     }
   }
-  console.warn('forgewhip: icon/Template.png missing or invalid');
+  console.warn('badforge: icon/Template.png missing or invalid');
   return nativeImage.createEmpty();
 }
 
@@ -106,7 +106,7 @@ async function getTrayIcon() {
       } catch (e) {
         console.warn('AppIcon.icns Quick Look thumbnail failed:', e?.message || e);
       }
-      const tmp = path.join(os.tmpdir(), 'forgewhip-tray.icns');
+      const tmp = path.join(os.tmpdir(), 'badforge-tray.icns');
       try {
         fs.copyFileSync(file, tmp);
         const t = await tryIcnsTrayImage(tmp);
@@ -278,7 +278,7 @@ function sendMacroLinux(text) {
 // ── App lifecycle ───────────────────────────────────────────────────────────
 app.whenReady().then(async () => {
   tray = new Tray(await getTrayIcon());
-  tray.setToolTip('ForgeWhip - click for whip');
+  tray.setToolTip('BadForge - click for whip');
   tray.setContextMenu(
     Menu.buildFromTemplate([
       { label: 'Quit', click: () => app.quit() },
